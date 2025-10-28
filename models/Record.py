@@ -1,11 +1,16 @@
 from .Name import Name
 from .Phone import Phone
+from .Birthday import Birthday
 
 
 class Record:
     def __init__(self, name):
         self.name = Name(name)
         self.phones = []
+        self.birthday = None
+
+    def set_birthday(self, birthday):
+        self.birthday = Birthday(birthday)
 
     def add_phone(self, phone_number):
         phone = Phone(phone_number)
