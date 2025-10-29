@@ -14,7 +14,7 @@ class CommandManager:
     @staticmethod
     def add_contact_command(args):
         if len(args) < 2:
-            return f"Error: {Command.ADD_CONTACT.value}  command requires a name and a phone number."
+            return f"Error: {Command.ADD_CONTACT}  command requires a name and a phone number."
 
         name = args[0]
         phone = args[1]
@@ -37,7 +37,7 @@ class CommandManager:
     @staticmethod
     def update_contact_command(args):
         if len(args) < 3:
-            return f"Error: '{Command.UPDATE_CONTACT.value}' command requires a name and an old phone number and a new phone number ."
+            return f"Error: '{Command.UPDATE_CONTACT}' command requires a name and an old phone number and a new phone number ."
 
         name = args[0]
         old_phone = args[1]
@@ -56,7 +56,7 @@ class CommandManager:
     @staticmethod
     def show_contact_command(args):
         if len(args) < 1:
-            return f"Error: {Command.SHOW_CONTACT.value} command requires a name."
+            return f"Error: {Command.SHOW_CONTACT} command requires a name."
 
         name = args[0]
         record = CommandManager.contacts.get(name)
@@ -78,7 +78,7 @@ class CommandManager:
     @staticmethod
     def add_contact_birthday_command(args):
         if len(args) < 2:
-            return f"Error: '{Command.ADD_BIRTHDAY.value}' command requires a name and a birthday (YYYY-MM-DD)."
+            return f"Error: '{Command.ADD_BIRTHDAY}' command requires a name and a birthday (YYYY-MM-DD)."
 
         name = args[0]
         birthday_str = args[1]
@@ -96,7 +96,7 @@ class CommandManager:
     @staticmethod
     def show_contact_birthday_command(args):
         if len(args) < 1:
-            return f"Error: '{Command.SHOW_BIRTHDAY.value}' command requires a name."
+            return f"Error: '{Command.SHOW_BIRTHDAY}' command requires a name."
 
         name = args[0]
         record = CommandManager.contacts.get(name)
