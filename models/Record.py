@@ -28,4 +28,4 @@ class Record:
         raise ValueError("Phone number to update is not found.")
 
     def __str__(self):
-        return f"Contact name: {self.name.value}, phones: {'; '.join(p.value for p in self.phones)}"
+        return f"Contact name: {self.name.value}{"" if self.birthday == None else f", birthday {self.birthday.value}"}, phones: {'; '.join(p.value for p in self.phones)}"

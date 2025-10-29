@@ -2,6 +2,17 @@ from models.Record import Record
 from models.AddressBook import AddressBook
 from Command import Command
 
+def value_error_decorator(func):
+    def command_wrapper(args):
+        try:
+            return func(args)
+        except ValueError as e:
+            return f"Error: {e}"
+
+    return command_wrapper
+
+
+
 
 class CommandManager:
 
@@ -12,6 +23,7 @@ class CommandManager:
         CommandManager.contacts.clear()
 
     @staticmethod
+    @value_error_decorator
     def add_contact_command(args):
         if len(args) < 2:
             return f"Error: {Command.ADD_CONTACT}  command requires a name and a phone number."
@@ -21,20 +33,18 @@ class CommandManager:
 
         record = CommandManager.contacts.get(name)
       
+        is_not_found = record is None
+        if is_not_found:
+            record = Record(name)
 
-        try:
-            is_not_found = record is None
-            if is_not_found:
-                record = Record(name)
-
-            record.add_phone(phone)
-            CommandManager.contacts.set_record(record)
-            return f"Contact '{name}' with phone '{phone}' {"added" if is_not_found else "updated"} successfully."
+        record.add_phone(phone)
+        CommandManager.contacts.set_record(record)
+        return f"Contact '{name}' with phone '{phone}' {"added" if is_not_found else "updated"} successfully."
         
-        except ValueError as e:
-            return f"Error: {e}"
+       
 
     @staticmethod
+    @value_error_decorator
     def update_contact_command(args):
         if len(args) < 3:
             return f"Error: '{Command.UPDATE_CONTACT}' command requires a name and an old phone number and a new phone number ."
@@ -47,11 +57,9 @@ class CommandManager:
         if not record:
             return f"Error: Contact '{name}' does not exist."
 
-        try:
-            record.edit_phone(old_phone, new_phone)
-            return f"Contact '{name}' updated with new phone '{new_phone}'."
-        except ValueError as e:
-            return f"Error: {e}"
+        record.edit_phone(old_phone, new_phone)
+        return f"Contact '{name}' updated with new phone '{new_phone}'."
+       
 
     @staticmethod
     def show_contact_command(args):
@@ -76,6 +84,7 @@ class CommandManager:
         return "\n".join(output_lines)
 
     @staticmethod
+    @value_error_decorator
     def add_contact_birthday_command(args):
         if len(args) < 2:
             return f"Error: '{Command.ADD_BIRTHDAY}' command requires a name and a birthday (YYYY-MM-DD)."
@@ -87,11 +96,9 @@ class CommandManager:
         if not record:
             return f"Error: Contact '{name}' does not exist."
 
-        try:
-            record.set_birthday(birthday_str)
-            return f"Birthday '{birthday_str}' added to contact '{name}'."
-        except ValueError as e:
-            return f"Error: {e}"
+        
+        record.set_birthday(birthday_str)
+        return f"Birthday '{birthday_str}' added to contact '{name}'."
 
     @staticmethod
     def show_contact_birthday_command(args):
