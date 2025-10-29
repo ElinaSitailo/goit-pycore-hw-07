@@ -1,7 +1,10 @@
 from .Field import Field
 from datetime import datetime
 
+
 class Birthday(Field):
+    BIRTHDAY_FORMAT = "DD.MM.YYYY"
+
     def __init__(self, value: str):
         try:
             # Додайте перевірку коректності даних
@@ -9,5 +12,5 @@ class Birthday(Field):
             birthday_date = datetime.strptime(value, "%d.%m.%Y").date()
             super().__init__(birthday_date)
         except ValueError:
-            raise ValueError("Invalid date format. Use DD.MM.YYYY")
+            raise ValueError(f"Invalid date format. Use {Birthday.BIRTHDAY_FORMAT}")
 

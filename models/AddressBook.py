@@ -1,9 +1,11 @@
 from collections import UserDict
-from datetime import datetime, timedelta
+from datetime import date, datetime, timedelta
 
 
 class AddressBook(UserDict):
-    def add_record(self, record):
+    DAYS_AHEAD = 7
+
+    def set_record(self, record):
         self.data[record.name.value] = record
 
     def delete(self, name):
@@ -16,7 +18,7 @@ class AddressBook(UserDict):
         return self.data.get(name, None)
 
     def get_upcoming_birthdays(
-        self, days_ahead: int = 7, now_date: datetime = datetime.now()
+        self, days_ahead: int = 7, now_date: date = datetime.now().date()
     ):
 
         if now_date is None:
@@ -34,7 +36,7 @@ class AddressBook(UserDict):
                 )
 
                 try:
-                    # Assuming birth_date is a datetime object
+
                     this_year_birthday = birth_date.value.replace(year=now_date.year)
                     print(f"This year's birthday: {this_year_birthday}")
 
@@ -47,6 +49,7 @@ class AddressBook(UserDict):
 
                     else:
                         this_year_birthday_weekday = this_year_birthday.weekday()
+
                         # Adjust for weekends (Saturday and Sunday)
                         if this_year_birthday_weekday == 6:  # Sunday
                             this_year_birthday += timedelta(days=1)  # Move to Monday
@@ -61,15 +64,10 @@ class AddressBook(UserDict):
                         )
 
                         if 0 <= days_until_birthday <= days_ahead:
-                            # upcoming_birthdays.append(
-                            #     (
-                            #         record.name,
-                            #         birth_date.value.strftime("%d.%m.%Y"),
-                            #         f"congratulation date: {this_year_birthday}.",
-                            #     )
-                            # )
                             upcoming_birthdays[record.name.value] = record
-                            print(f"Added to upcoming birthdays: {record.name}, {birth_date}")
+                            print(
+                                f"Added to upcoming birthdays: {record.name}, {birth_date}"
+                            )
 
                 except Exception as e:
                     print(f"Error processing birthday for {record.name}: {e}")
