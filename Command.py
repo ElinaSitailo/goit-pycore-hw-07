@@ -1,7 +1,7 @@
 
-from enum import Enum
+from enum import StrEnum
 
-class Command(Enum):
+class Command(StrEnum):
     ADD_CONTACT = "add"
     UPDATE_CONTACT = "change"
     SHOW_CONTACT =  "phone"

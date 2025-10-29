@@ -1,6 +1,6 @@
 from models.Record import Record
 from models.AddressBook import AddressBook
-import Command
+from Command import Command
 
 
 class CommandManager:

@@ -24,21 +24,21 @@ class AddressBook(UserDict):
         if now_date is None:
             now_date = datetime.now()
 
-        print(f"\nNOW DATE IS: {now_date}, days ahead: {days_ahead}")
+        #print(f"\nNOW DATE IS: {now_date}, days ahead: {days_ahead}")
 
         upcoming_birthdays = {}
 
         for record in self.data.values():
             if record.birthday is not None:
                 birth_date = record.birthday
-                print(
-                    f"\nProcess birth date for name: {record.name}, birth date: {birth_date}"
-                )
+                # print(
+                #     f"\nProcess birth date for name: {record.name}, birth date: {birth_date}"
+                # )
 
                 try:
 
                     this_year_birthday = birth_date.value.replace(year=now_date.year)
-                    print(f"This year's birthday: {this_year_birthday}")
+                    #print(f"This year's birthday: {this_year_birthday}")
 
                     # If birthday has already occurred this year, consider next year's birthday
                     if this_year_birthday < now_date:
@@ -53,21 +53,21 @@ class AddressBook(UserDict):
                         # Adjust for weekends (Saturday and Sunday)
                         if this_year_birthday_weekday == 6:  # Sunday
                             this_year_birthday += timedelta(days=1)  # Move to Monday
-                            print(f"Adjusted birthday, Sunday: {this_year_birthday}")
+                            #print(f"Adjusted birthday, Sunday: {this_year_birthday}")
                         elif this_year_birthday_weekday == 5:  # Saturday
                             this_year_birthday += timedelta(days=2)  # Move to Monday
-                            print(f"Adjusted birthday, Saturday: {this_year_birthday}")
+                            #print(f"Adjusted birthday, Saturday: {this_year_birthday}")
 
                         days_until_birthday = (this_year_birthday - now_date).days
-                        print(
-                            f"Days until birthday: {days_until_birthday}, weekday: {this_year_birthday_weekday}"
-                        )
+                        # print(
+                        #     f"Days until birthday: {days_until_birthday}, weekday: {this_year_birthday_weekday}"
+                        # )
 
                         if 0 <= days_until_birthday <= days_ahead:
                             upcoming_birthdays[record.name.value] = record
-                            print(
-                                f"Added to upcoming birthdays: {record.name}, {birth_date}"
-                            )
+                            # print(
+                            #     f"Added to upcoming birthdays: {record.name}, {birth_date}"
+                            # )
 
                 except Exception as e:
                     print(f"Error processing birthday for {record.name}: {e}")
